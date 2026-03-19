@@ -19,32 +19,38 @@ ScalarConverter::~ScalarConverter()
 {
 }
 
-
-int is_num(std::string value)
+void ScalarConverter::convert(std::string input) 
 {
-    for (int i = 0; value[i]; i++)
-    {
-        if (value[i] < '0' || value[i] > '9')
-            return 0;  
-    }
-    return 1;
-}
+    double d = std::atof(input.c_str());
 
-void ScalarConverter::convert(std::string value)
-{
-    if (value.length() == 1 && !isdigit(value[0]))
-    {
-        char c = value[0];
-        int i = static_cast<int>(value[0]);
-        float f = static_cast<float>(value[0]);
-        double d = static_cast<double>(value[0]);
-        std::cout << "char: " << c << std::endl;
-        std::cout << "int: " << i << std::endl;
-        std::cout << "float: " << f << std::endl;
-        std::cout << "double: " << d << std::endl;
-    }
+    std::cout << "char : ";
+    // if (input.length() == 1 && !isdigit(d))
+    //     std::cout << "'" << static_cast<char>(input[0]) << "'" << std::endl;
+    if (d < 0 || d > 127 || input == "nan" || input == "nanf" )
+        std::cout << "impossible" << std::endl;
+    else if (!isprint(static_cast<int>(d)))
+            std::cout << "Non displayable" << std::endl;
+    else
+        std::cout << "'" << static_cast<char>(d) << "'" << std::endl;
 
-    if (is_num(value) == 1 && value.find_last_of("f") == 1)
-        std::cout << "C'est un float" << std::endl;
-    // if ()
+    std::cout << "int : ";
+    // if (input.length() == 1 && !isdigit(d))
+    //     std::cout << static_cast<int>(input[0]) << std::endl;
+    if (d > INT_MAX || d < INT_MIN || input == "nan" || input == "nanf")
+        std::cout << "impossible" << std::endl;
+    else
+        std::cout << static_cast<int>(d) << std::endl;
+    
+    std::cout << std::fixed << std::setprecision(1);
+    std::cout << "float : ";
+    // if (input.length() == 1 && !isdigit(d))
+    //     std::cout << static_cast<float>(input[0]) << std::endl;
+    // else
+    std::cout << static_cast<float>(d) << "f" << std::endl;
+
+    std::cout << "double : ";
+    // if (input.length() == 1 && !isdigit(d))
+    //     std::cout << static_cast<double>(input[0]) << std::endl;
+    // else 
+    std::cout << static_cast<double>(d) << std::endl;
 }
