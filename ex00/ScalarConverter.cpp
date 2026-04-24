@@ -47,53 +47,107 @@ ScalarConverter::~ScalarConverter()
 //     std::cout << static_cast<double>(d) << std::endl;
 // }
 
-int isChar(std::string input)
+bool isChar(std::string input)
+{
+    if (!std::isalpha(input[0]) || input.length() > 1)
+        return false;
+    return true;
+}
+
+bool isInt(std::string input)
 {
     const char *str = input.c_str();
+    int i = 0;
 
-    for (int i = 0; str[i]; i++)
+    if (str[i] == '+' || str[i] == '-')
+        i++;
+    for (; str[i]; i++)
     {
-        if (!isalpha(str[i]))
-            return 0;
+        if (!std::isdigit(input[i]))
+            return false;
     }
-    return 1;
+    return true;
 }
 
-int isInt(std::string input)
-{
-    const char *str = input.c_str();
-
-    for (int i = 0; str[i]; i++)
-    {
-        if (str[i] < '0' || str[i] > '9')
-            return 0;
-    }
-    return 1;
-}
-int isFloat(std::string input)
-{
-    
-    return 0;
-}
-
-int isDouble(std::string input)
+bool isFloat(std::string input)
 {
     int last = input.length();
-    if (input[last] != 'f')
-        return 0;
-    return 1;
+    bool has_point = false;
+    bool has_digit = false;
+    int i = 0;
+
+    if (input == "nanf" || input == "+inff" || input == "-inff")
+            return true;
+    if (input[last - 1] != 'f' || last < 2)
+        return false;
+    if (input[i] == '+' || input[i] == '-')
+        i++;
+    for (; i < last - 1; i++)
+    {
+        if (input[i] == '.')
+        {
+            if (has_point)
+                return false;
+            has_point = true;
+            continue;
+        }
+        else if (std::isdigit(input[i]))
+        {
+            has_digit = true;
+            continue;
+        }
+        else
+            return false;
+    }
+    return has_point && has_digit;
+}
+
+bool isDouble(std::string input)
+{
+    int i = 0;
+    bool has_point = false;
+    bool has_digit = false;
+
+    if (input[i] == '+' || input[i] == '-')
+        i++;
+    for (; input[i]; i++)
+    {
+        if (input[i] == '.')
+        {
+            if (has_point)
+                return false;
+            has_point = true;
+            continue;
+        }
+        else if (std::isdigit(input[i]))
+        {
+            has_digit = true;
+            continue;
+        }
+        else
+            return false;
+    }
+    return has_point && has_digit;
 }
 
 void ScalarConverter::convert(std::string input)
 {
     if (isChar(input))
+    {
         std::cout << "it's a char" << std::endl;
+    }
     else if (isInt(input))
+    {
         std::cout << "it's an int" << std::endl;
+    }
     else if (isFloat(input))
+    {
         std::cout << "it's a float" << std::endl;
+    }
     else if (isDouble(input))
+    {
         std::cout << "it's a double" << std::endl;
+    }
     else
-        std::cout << "it's unknown" << std::endl;
+        std::cout << "Please, enter a valid argument" << std::endl;
 }
