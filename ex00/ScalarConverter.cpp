@@ -48,7 +48,8 @@ bool isFloat(std::string input)
     bool has_digit = false;
     int i = 0;
 
-    if (input == "nanf" || input == "+inff" || input == "-inff")
+    if (input == "nanf" || input == "+inff" || input == "-inff" ||
+        input == "inf" )
             return true;
     if (input[last - 1] != 'f' || last < 2)
         return false;
@@ -80,7 +81,8 @@ bool isDouble(std::string input)
     bool has_point = false;
     bool has_digit = false;
 
-        if (input == "nan" || input == "+inf" || input == "-inf")
+        if (input == "nan" || input == "+inf" || input == "-inf" ||
+            input == "inf")
             return true;
     if (input[i] == '+' || input[i] == '-')
         i++;
@@ -147,7 +149,7 @@ void ScalarConverter::convert(std::string input)
     else if (isInt(input) || isFloat(input) || isDouble(input))
     {
         if (input == "nanf" || input == "+inff" || input == "-inff"
-         || input == "nan" || input == "+inf" || input == "-inf")
+         || input == "nan" || input == "+inf" || input == "-inf" || input == "inf")
             isSpecial = true;
         value = std::strtod(input.c_str(), NULL);
     }
