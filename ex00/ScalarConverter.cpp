@@ -49,7 +49,7 @@ bool isFloat(std::string input)
     int i = 0;
 
     if (input == "nanf" || input == "+inff" || input == "-inff" ||
-        input == "inf" )
+        input == "inf" || input == "+nanf" || input == "-nanf")
             return true;
     if (input[last - 1] != 'f' || last < 2)
         return false;
@@ -75,15 +75,15 @@ bool isFloat(std::string input)
     return has_point && has_digit;
 }
 
-bool isDouble(std::string input)
+bool isDouble(std::string input) 
 {
     int i = 0;
     bool has_point = false;
     bool has_digit = false;
 
-        if (input == "nan" || input == "+inf" || input == "-inf" ||
-            input == "inf")
-            return true;
+    if (input == "nan" || input == "+inf" || input == "-inf" ||
+        input == "inf" || input == "+nan" || input == "-nan")
+        return true;
     if (input[i] == '+' || input[i] == '-')
         i++;
     for (; input[i]; i++)
@@ -148,10 +148,9 @@ void ScalarConverter::convert(std::string input)
     }
     else if (isInt(input) || isFloat(input) || isDouble(input))
     {
-        if (input == "nanf" || input == "+inff" || input == "-inff"
-         || input == "nan" || input == "+inf" || input == "-inf" || input == "inf")
-            isSpecial = true;
         value = std::strtod(input.c_str(), NULL);
+        if (std::isnan(value) || std::isinf(value))
+            isSpecial = true;
     }
     else
     {
