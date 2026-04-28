@@ -141,10 +141,8 @@ void ScalarConverter::convert(std::string input)
 
     if (isChar(input))
     {
-        if (std::isprint(input[0]))
+        if (std::isprint(input[0]) && !std::isdigit(input[0]))
             value = static_cast<int>(input[0]);
-        else
-            std::cout << "Non displayable" << std::endl;
     }
     else if (isInt(input) || isFloat(input) || isDouble(input))
     {
