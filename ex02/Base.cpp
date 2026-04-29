@@ -28,8 +28,8 @@ void identify(Base &p)
 {
     try 
     {
-        Base &b = dynamic_cast<A&>(p); 
-        (void)b;
+        Base &a = dynamic_cast<A&>(p); 
+        (void)a;
         std::cout << "Reference = A" << std::endl;
     }
     catch(std::exception &e) {}
@@ -44,8 +44,8 @@ void identify(Base &p)
    
     try 
     {
-        Base &b = dynamic_cast<C&>(p); 
-        (void)b;
+        Base &c = dynamic_cast<C&>(p); 
+        (void)c;
         std::cout << "Reference = C" << std::endl;
     }
     catch(std::exception &e) {}
