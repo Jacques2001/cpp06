@@ -108,7 +108,9 @@ bool isDouble(std::string input)
 
 void printChar(double input, bool isSpecial)
 {
-    if (isSpecial)
+    if (input < -2147483648 || input > 2147483647)
+        std::cout << "char: impossible" << std::endl;
+    else if (isSpecial)
         std::cout << "char: impossible" << std::endl;
     else if (!std::isprint(input))
         std::cout << "char: Non displayable" << std::endl;
@@ -118,7 +120,9 @@ void printChar(double input, bool isSpecial)
 
 void printInt(double input, bool isSpecial)
 {
-    if (isSpecial)
+    if (input < -2147483648 || input > 2147483647)
+        std::cout << "int: Non displayable" << std::endl;
+    else if (isSpecial)
         std::cout << "int: impossible" << std::endl;
     else
         std::cout << "int: " << static_cast<int>(input) << std::endl;
