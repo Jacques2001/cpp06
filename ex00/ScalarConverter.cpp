@@ -149,6 +149,8 @@ void ScalarConverter::convert(std::string input)
     {
         if (std::isprint(input[0]) && !std::isdigit(input[0]))
             value = static_cast<int>(input[0]);
+        else if (std::isdigit(input[0]))
+            value = std::atoi(input.c_str());
     }
     else if (isInt(input) || isFloat(input) || isDouble(input))
     {
@@ -161,7 +163,6 @@ void ScalarConverter::convert(std::string input)
         std::cout << "Error: enter a valid argument" << std::endl;
         return ;
     }
-
     printChar(value, isSpecial);
     printInt(value, isSpecial);
     printFloat(value);

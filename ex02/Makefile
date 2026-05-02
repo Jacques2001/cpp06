@@ -12,7 +12,7 @@ SRCS        =   main.cpp Base.cpp
 
 OBJS        = $(SRCS:%.cpp=$(OBJ_DIR)/%.o)
 
-CC          = c++ -g -std=c++98
+CC          = c++ -std=c++98
 CFLAGS      = -Wall -Wextra -Werror
 
 all: $(NAME)
